@@ -237,7 +237,6 @@ static BOOL firstLocationHasBeenRetrieved = NO;
 
 - (void) locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     [self closeLoadingAlert];
-    NSLog(@"Authorization status for location manager changed to %d", status);
     if (status == kCLAuthorizationStatusAuthorized || status == kCLAuthorizationStatusAuthorizedWhenInUse) { // we got authorized.
         [self.locationManager startUpdatingLocation];
         self.mapView.showsUserLocation = YES;
