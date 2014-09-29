@@ -8,7 +8,7 @@
 
 #import "RESTManager.h"
 
-#define kNearbyFlickrPhotosFlickrAPIKey                 @"INSERT_YOUR_FLICKR_API_KEY"
+#define kNearbyFlickrPhotosFlickrAPIKey                 @"API_KEY"
 #define kNearbyFlickrPhotosFlickrBaseRESTURL            @"https://api.flickr.com/services/rest/?method="
 #define kNearbyFlickrPhotosFlickrSearchMethod           @"flickr.photos.search"
 #define kNearbyFlickrPhotosFlickrJSONFormat             @"format=json"
