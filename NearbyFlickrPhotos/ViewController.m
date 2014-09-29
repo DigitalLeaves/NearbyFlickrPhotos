@@ -69,7 +69,6 @@ static BOOL firstLocationHasBeenRetrieved = NO;
         if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
             [self.locationManager requestWhenInUseAuthorization];
 #endif
-        [self.locationManager startUpdatingLocation];
         self.mapView.showsUserLocation = NO;
     }
 }
@@ -238,7 +237,7 @@ static BOOL firstLocationHasBeenRetrieved = NO;
 
 - (void) locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     [self closeLoadingAlert];
-    
+    NSLog(@"Authorization status for location manager changed to %d", status);
     if (status == kCLAuthorizationStatusAuthorized || status == kCLAuthorizationStatusAuthorizedWhenInUse) { // we got authorized.
         [self.locationManager startUpdatingLocation];
         self.mapView.showsUserLocation = YES;
@@ -251,7 +250,7 @@ static BOOL firstLocationHasBeenRetrieved = NO;
 
 - (void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     if (!locations || locations.count < 1) return;
-    NSLog(@"Retrieved locations: %@", locations);
+    NSLog(@"Got locations: %@", locations);
     [self.locationManager stopUpdatingLocation];
     
     self.userLocation = [(CLLocation *) [locations lastObject] coordinate];

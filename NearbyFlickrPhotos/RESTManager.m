@@ -8,7 +8,7 @@
 
 #import "RESTManager.h"
 
-#define kNearbyFlickrPhotosFlickrAPIKey                 @"INSERT_YOUR_FLICKR_APP_ID_HERE"
+#define kNearbyFlickrPhotosFlickrAPIKey                 @"f6ff7588191919b583b40832241da001"
 #define kNearbyFlickrPhotosFlickrBaseRESTURL            @"https://api.flickr.com/services/rest/?method="
 #define kNearbyFlickrPhotosFlickrSearchMethod           @"flickr.photos.search"
 #define kNearbyFlickrPhotosFlickrJSONFormat             @"format=json"
@@ -48,7 +48,9 @@
     AFHTTPRequestOperationManager * manager = [[AFHTTPRequestOperationManager alloc] init];
     
     // execute the request
+    NSLog(@"Requesting flickr photos: %@", baseURL);
     [manager GET:baseURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Response from Flickr: %@", responseObject);
         // analyze results
         if (responseObject && [responseObject isKindOfClass:[NSDictionary class]]) { // analyze response looking for the photos array
             NSDictionary * responseDict = (NSDictionary *) responseObject;
@@ -56,13 +58,12 @@
             if (photosDict && ([photosDict isKindOfClass:[NSDictionary class]])) {
                 NSArray * photoArray = photosDict[kNearbyFlickrPhotosResponseParamPhoto];
                 if (photoArray && ([photoArray isKindOfClass:[NSArray class]])) {
-                    //NSLog(@"Results: %@", photoArray);
                     block(YES, photoArray);
                 } else block(NO, nil);
             } else block(NO, nil);
         } else block(NO, nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) { // invalid request.
-        //NSLog(@"Error loading images from flickr: %@", error.localizedDescription);
+        NSLog(@"Error loading images from flickr: %@", error.localizedDescription);
         block(NO, nil);
     }];
 }
